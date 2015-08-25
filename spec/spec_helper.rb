@@ -25,6 +25,7 @@ def app
     r.define_rule(:match => '/header', :metric => :rph, :type => :frequency, :limit => 60)
     r.define_rule(:match => '/per_match/.*', :metric => :rph, :type => :frequency, :limit => 60, :per_url => false)
     r.define_rule(:match => '/per_url/.*', :metric => :rph, :type => :frequency, :limit => 60, :per_url => true)
+    r.define_rule(:match => '/get_method', :metric => :rpd, :type => :fixed, :limit => 60, methods: ['GET'])
   end
 end
 

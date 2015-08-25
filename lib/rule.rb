@@ -9,6 +9,7 @@ class Rule
       :limit => 100,
       :per_ip => true,
       :per_url => false,
+      :per_user => false,
       :token => false
     }
     @options = default_options.merge(options)
@@ -55,7 +56,11 @@ class Rule
 
   def get_key(request)
     key = (@options[:per_url] ? request.path : @options[:match].to_s)
-    key = key + request.ip.to_s if @options[:per_ip]
+    if @options[:per_user] && user = request.env['warden'].authenticate
+      key = key + "user:#{user.id}"
+    else
+      key = key + request.ip.to_s if @options[:per_ip]
+    end
     key = key + request.params[@options[:token].to_s] if @options[:token]
     key
   end

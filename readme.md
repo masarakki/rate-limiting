@@ -38,6 +38,7 @@ config/application.rb
          r.define_rule(:match => '/freq/rph', :metric => :rph, :type => :frequency, :limit => 60)
          r.define_rule(:match => '/freq/rpd', :metric => :rpd, :type => :frequency, :limit => 1440)
          r.define_rule(:match => '/header', :metric => :rph, :type => :frequency, :limit => 60)
+         r.define_rule(:match => '/resturl', :metric => :rph, :type => :fixed, :limit => 60, :methods => [:get])
 
        end
 
@@ -50,6 +51,10 @@ Rule Options
 ### match
 
 Accepts aimed resource path or Regexp like '/resource' or "/resource/.*"
+
+### methods
+
+Accepts aimed http methods.
 
 ### metric
 
@@ -130,4 +135,3 @@ end
 r.set_cache(store) if store.present?
 Rails.logger.debug "=> Rate Limiting Store Configured: #{r.cache}"
 ```
-

@@ -104,7 +104,7 @@ class RateLimiting
 
   def find_matching_rule(request)
     @rules.each do |rule|
-      return rule if request.path =~ rule.match
+      return rule if request.path =~ rule.match && rule.http_methods.include?(request.request_method.to_s.upcase)
     end
     nil
   end

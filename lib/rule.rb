@@ -3,6 +3,7 @@ class Rule
   def initialize(options)
     default_options = {
       :match => /.*/,
+      :methods => %w(GET HEAD POST PUT DELETE PATCH OPTIONS),
       :metric => :rph,
       :type => :frequency,
       :limit => 100,
@@ -16,6 +17,10 @@ class Rule
 
   def match
     @options[:match].class == String ? Regexp.new(@options[:match] + "$") : @options[:match]
+  end
+
+  def http_methods
+    @options[:methods].map {|m| m.to_s.upcase }
   end
 
   def limit
@@ -55,4 +60,3 @@ class Rule
     key
   end
 end
-
